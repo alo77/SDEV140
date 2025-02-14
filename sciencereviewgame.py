@@ -15,3 +15,8 @@ root.title("Science Review Game")
 
 start_button = tk.Button(root, text="Start Game", command=start_game)
 start_button.pack(pady=20)
+
+question_label = tk.Label(root, text="", wraplength=400)
+question_label.pack(pady=20)
+
+root.mainloop()
