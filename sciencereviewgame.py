@@ -4,6 +4,11 @@ import json
 def load_game_data():
     with open("sciencecourse2-2.json", "r") as f:
       return json.load(f)
+    
+def display_question(question_data):
+    # Clear any existing answer widgets
+    for widget in answer_frame.winfo_children():
+        widget.destroy()
 
 def start_game():
     game_data = load_game_data()
