@@ -14,34 +14,18 @@ def display_question(question_data):
 
     type = question_data.get("type", "").lower()
 
-    if type == "fill-in-the-blanks":
-        fill_in_the_blanks(question_data)
-    elif type == "ordering":
-        ordering(question_data)
-    elif type == "matching":
-        matching(question_data)
-    elif type == "grouping":
-        grouping(question_data)
-    elif type == "ordering":
-        ordering(question_data)
+    if type == "selecting":
+        selecting(question_data)
+    elif type == "sequencing":
+        sequencing(question_data)
+    elif type == "true or false":
+        true_or_false(question_data)
     else:
         raise ValueError(f"Unknown question type: {type}")
     
     answer_frame.pack(pady=20)
 
-def fill_in_the_blanks(question_data):
-    sentence = question_data["sentence"]
-    for i, word in enumerate(sentence):
-        label = tk.Label(answer_frame, text=word)
-        label.grid(row=0, column=i)
-
-    entry = tk.Entry(answer_frame)
-    entry.grid(row=1, columnspan=len(sentence))
-
-    submit_button = tk.Button(answer_frame, text="Submit")
-    submit_button.grid(row=2, columnspan=len(sentence))
-
-def ordering(question_data):
+def selecting(question_data):
     correct_order = question_data["correct_order"]
     for i, word in enumerate(correct_order):
         label = tk.Label(answer_frame, text=word)
@@ -50,7 +34,7 @@ def ordering(question_data):
     submit_button = tk.Button(answer_frame, text="Submit")
     submit_button.grid(row=1, columnspan=len(correct_order))
 
-def matching(question_data):
+def sequencing(question_data):
     correct_order = question_data["correct_order"]
     for i, word in enumerate(correct_order):
         label = tk.Label(answer_frame, text=word)
@@ -59,16 +43,7 @@ def matching(question_data):
     submit_button = tk.Button(answer_frame, text="Submit")
     submit_button.grid(row=1, columnspan=len(correct_order))
 
-def grouping(question_data):
-    correct_order = question_data["correct_order"]
-    for i, word in enumerate(correct_order):
-        label = tk.Label(answer_frame, text=word)
-        label.grid(row=0, column=i)
-
-    submit_button = tk.Button(answer_frame, text="Submit")
-    submit_button.grid(row=1, columnspan=len(correct_order))
-
-def ordering(question_data):
+def true_or_false(question_data):
     correct_order = question_data["correct_order"]
     for i, word in enumerate(correct_order):
         label = tk.Label(answer_frame, text=word)

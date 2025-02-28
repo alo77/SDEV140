@@ -24,7 +24,7 @@
     "questions": [
       {
         "question": "Select the 3 types of consumers. Check all that apply.",
-        "type": "selection",
+        "type": "selecting",
         "options": [
           { "text": "Herbivores", "correct": true },
           { "text": "Omnivores", "correct": true },
@@ -48,7 +48,7 @@
     "questions": [
       {
         "question": "What are the 3 major categories in the food chain? Check all that apply.",
-        "type": "selection",
+        "type": "selecting",
         "options": [
           { "text": "Producer - Produces food through the process of photosynthesis", "correct": true },
           { "text": "Decomposer - Breaks down dead plants and animals to use them for food", "correct": true },
