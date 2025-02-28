@@ -4,7 +4,7 @@
     "questions": [
       {
         "question": "Select the 7 major biomes. Check all that apply.",
-        "type": "check all that apply",
+        "type": "selecting",
         "options": [
           { "text": "Scrubland", "correct": true },
           { "text": "Grassland", "correct": true },
@@ -24,7 +24,7 @@
     "questions": [
       {
         "question": "Select the 3 types of consumers. Check all that apply.",
-        "type": "check all that apply",
+        "type": "selection",
         "options": [
           { "text": "Herbivores", "correct": true },
           { "text": "Omnivores", "correct": true },
@@ -48,7 +48,7 @@
     "questions": [
       {
         "question": "What are the 3 major categories in the food chain? Check all that apply.",
-        "type": "check all that apply",
+        "type": "selection",
         "options": [
           { "text": "Producer - Produces food through the process of photosynthesis", "correct": true },
           { "text": "Decomposer - Breaks down dead plants and animals to use them for food", "correct": true },
@@ -64,7 +64,7 @@
     "questions": [
       {
         "question": "Label the cycles of nature in the correct numbered sequence. Type the order number for each cycle in the boxes provided.",
-        "type": "put in order",
+        "type": "sequencing",
         "options": [
           { "text": "Carbon and Oxygen Cycle", "order": 2 },
           { "text": "Water Cycle", "order": 1 },
@@ -78,7 +78,7 @@
     "questions": [
       {
         "question": "What are the environmental animal reactions? Check all that apply.",
-        "type": "check all that apply",
+        "type": "selecting",
         "options": [
           { "text": "Adapt", "correct": true },
           { "text": "Migrate", "correct": true },
@@ -94,7 +94,7 @@
     "questions": [
       {
         "question": "Label the planets in their correct position from the Sun. Type the order number for each planet in the boxes provided.",
-        "type": "put in order",
+        "type": "sequencing",
         "options": [
           { "text": "Earth", "order": 3 },
           { "text": "Uranus", "order": 7 },
@@ -113,7 +113,7 @@
     "questions": [
       {
         "question": "Select the 8 moon phases of the lunar cycle. Check all that apply.",
-        "type": "check all that apply",
+        "type": "selecting",
         "options": [
           { "text": "New Moon", "correct": true },
           { "text": "Waxing Crescent", "correct": true },
@@ -134,7 +134,7 @@
     "questions": [
       {
         "question": "Select each of the 5 major bodies of the solar system. Check all that apply",
-        "type": "check all that apply",
+        "type": "selecting",
         "options": [
           { "text": "Comets", "correct": true },
           { "text": "Asteroids", "correct": true },
@@ -152,7 +152,7 @@
     "questions": [
       {
         "question": "Label each part of Newton's Second Law of Motion in proper sequence. Type the order number for each item in the formula.",
-        "type": "put in order",
+        "type": "sequencing",
         "options": [
           { "text": "m", "order": 3 },
           { "text": "F", "order": 1 },
