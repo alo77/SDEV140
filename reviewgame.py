@@ -14,10 +14,12 @@ class ReviewGame(EasyFrame):
     def __init__(self):
         EasyFrame.__init__(self, title="Science Review Game", width=500, height=400)
         self.score = 0
+        self.game_data = None
+        self.all_questions = []  # List to store all questions
+        self.current_question_index = 0
         self.createWidgets()
     
     def createWidgets(self):
-        # Create a score widget at the top-right
         self.score_label = tk.Label(self, text=f"Score: {self.score}")
         self.score_label.pack(side="top", anchor="ne", padx=10, pady=10)
         
@@ -33,6 +35,13 @@ class ReviewGame(EasyFrame):
     def load_game_data(self):
         with open("sciencecourse2-3.json", "r") as f:
             return json.load(f)
+    
+    def flatten_questions(self):
+        # Extract all questions from all modules into one list.
+        self.all_questions = []
+        for module in self.game_data:
+            for question in module["questions"]:
+                self.all_questions.append(question)
     
     def display_question(self, question_data):
         # Clear any existing answer widgets
@@ -97,20 +106,29 @@ class ReviewGame(EasyFrame):
 
     def start_game(self):
         self.game_data = self.load_game_data()
-        self.score = 0  # Reset score at the start
+        self.flatten_questions()  # Flatten questions from all modules into one list.
+        self.current_question_index = 0
+        self.score = 0
         self.update_score(0)
-        first_module = self.game_data[0]
-        first_question_data = first_module["questions"][0]
-        print("Loaded question:", first_question_data["question"])
-        self.display_question(first_question_data)
+        self.display_question(self.all_questions[self.current_question_index])
         self.start_button.pack_forget()
+        self.create_next_button()
 
+    def create_next_button(self):
         self.next_button = tk.Button(self, text="Next Question", command=self.next_question)
         self.next_button.pack(pady=20)
 
     def next_question(self):
-        # Placeholder for advancing to the next question.
-        print("Next question button pressed.")
+        self.current_question_index += 1
+        if self.current_question_index < len(self.all_questions):
+            self.display_question(self.all_questions[self.current_question_index])
+        else:
+            # No more questions: end of game.
+            self.question_label.config(text="Congratulations! You've completed the review game.")
+            for widget in self.answer_frame.winfo_children():
+                widget.destroy()
+            self.next_button.config(state=tk.DISABLED)
+            print("Game over. Final Score:", self.score)
 
 def main():
     ReviewGame().mainloop()
