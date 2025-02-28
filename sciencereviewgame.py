@@ -1,6 +1,23 @@
 import tkinter as tk
 import json
 
+root = tk.Tk()
+root.title("Science Review Game")
+
+start_button = tk.Button(root, text="Start Game", command=start_game)
+start_button.pack(pady=20)
+
+question_label = tk.Label(root, text="", wraplength=400)
+question_label.pack(pady=20)
+
+def start_game():
+    game_data = load_game_data()
+    first_module = game_data[0]
+    first_question = first_module["questions"][0]["question"]
+    print("Loaded question:", first_question)
+    question_label.config(text=first_question)
+    display_question(first_module["questions"][0])
+
 def load_game_data():
     with open("sciencecourse2-3.json", "r") as f:
       return json.load(f)
@@ -53,22 +70,6 @@ def true_or_false(question_data):
     submit_button.grid(row=1, columnspan=len(correct_order))
 
 answer_frame = tk.Frame(root)
-
-def start_game():
-    game_data = load_game_data()
-    first_module = game_data[0]
-    first_question = first_module["questions"][0]["question"]
-    print("Loaded question:", first_question)
-    question_label.config(text=first_question)
-
-root = tk.Tk()
-root.title("Science Review Game")
-
-start_button = tk.Button(root, text="Start Game", command=start_game)
-start_button.pack(pady=20)
-
-question_label = tk.Label(root, text="", wraplength=400)
-question_label.pack(pady=20)
 
 # This frame will contain the answer widgets (radio buttons, checkbuttons, listbox, etc.)
 answer_frame = tk.Frame(root)
