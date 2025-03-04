@@ -18,6 +18,10 @@ class ReviewGame(EasyFrame):
         self.current_question_index = 0
         self.createWidgets()
     
+    def open_game_window(self):
+        game_window = tk.Toplevel(self)
+        game_app = ReviewGame(game_window)
+    
     def createWidgets(self):
         self.score_label = tk.Label(self, text=f"Score: {self.score}")
         self.score_label.pack(side="top", anchor="ne", padx=10, pady=10)
