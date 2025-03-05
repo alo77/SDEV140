@@ -9,24 +9,6 @@ import json
 import tkinter as tk
 from breezypythongui import EasyFrame
 
-def check_selecting_answer(answer, correct_answer):
-    if answer == correct_answer:
-        return True
-    else:
-        return False
-
-def check_sequencing_answer(answer, correct_answer):
-    if answer == correct_answer:
-        return True
-    else:
-        return False
-
-def check_true_or_false_answer(answer, correct_answer):
-    if answer == correct_answer:
-        return True
-    else:
-        return False
-
 def show_custom_popup(parent, title, message):
     popup = tk.Toplevel(parent)
     popup.title(title)
@@ -44,6 +26,9 @@ def show_custom_popup(parent, title, message):
 
     message_label = tk.Label(popup, text=message, wraplength=250)
     message_label.pack(pady=(20, 10), padx=20)
+
+    self.score_label = tk.Label(popup, text=f"Score: {self.score}")
+    self.score_label.pack(side="top", anchor="ne", padx=10, pady=10)
 
     ok_button = tk.Button(popup, text="OK", command=popup.destroy)
     ok_button.pack()
