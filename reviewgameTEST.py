@@ -8,13 +8,7 @@ Short Description: This program is a review game that uses a JSON file to store 
 import json
 import tkinter as tk
 from breezypythongui import EasyFrame
-import tkinter.messagebox as messagebox
-from scorekeeperpopup import (
-    check_selecting_answer,
-    check_sequencing_answer,
-    check_true_or_false_answer,
-    show_custom_popup
-)
+from scorekeeperpopup import ScorekeeperPopup
 
 class ReviewGame(EasyFrame):
     def __init__(self):
@@ -22,14 +16,10 @@ class ReviewGame(EasyFrame):
         self.primary_color = "#4CAF50"    # Green
         self.secondary_color = "#FFFFFF"  # White
         self.configure(background=self.primary_color)
-
         self.score = 0
         self.game_data = None
         self.all_questions = []  # List to store all questions
         self.current_question_index = 0
-
-        
-
         self.createWidgets()
     
     def createWidgets(self):
@@ -100,49 +90,18 @@ class ReviewGame(EasyFrame):
     def true_or_false(self, question_data):
         options = question_data.get("options", [])
         self.tf_var = tk.StringVar()
-        # Optionally, you can set a default value if needed:
-        self.tf_var.set("")
         for i, option in enumerate(options):
             radio = tk.Radiobutton(self.answer_frame, text=option["text"],
-                               variable=self.tf_var, value=option["text"])
+                                   variable=self.tf_var, value=option["text"])
             radio.grid(row=0, column=i, padx=5)
         submit_button = tk.Button(self.answer_frame, text="Submit", command=self.submit_answer)
         submit_button.grid(row=1, column=0, columnspan=len(options), pady=10)
 
     def submit_answer(self):
-        if self.current_question_index >= len(self.all_questions):
-            print("No more questions.")
-            return
-        
-        current_question = self.all_questions[self.current_question_index]
-        q_type = current_question.get("type", "").lower().replace(" ", "")
-        print("Processing question type:", q_type)
-
-        if q_type == "selecting":
-            user_answers = [var.get() for var in self.check_vars]
-            if check_selecting_answer(current_question, user_answers)["options"]:
-                self.update_score(1)
-        elif q_type == "sequencing":
-            user_answers = [entry.get() for entry in self.seq_entries]
-            if check_sequencing_answer(current_question, user_answers)["options"]:
-                self.update_score(1)
-        elif q_type == "true or false":
-            try:
-                user_answer = self.tf_var.get()
-            except AttributeError:
-                print("Error: tf_var is not defined.")
-                return
-            
-            correct_answer = next((option["text"] for option in current_question["options"] if option["correct"]), None)
-            print("User answer:", user_answer, "Correct answer:", correct_answer)
-            if correct_answer is not None and check_true_or_false_answer(user_answer, correct_answer):
-                self.update_score(1)
-
-            else:
-                print(f"Incorrect. Correct answer: {correct_answer}")
-                return
-            
-            print("Answer submitted. Current score:", self.score)
+        # Placeholder for answer-checking logic.
+        # For demonstration, we add 1 point for each submitted answer.
+        self.update_score(1)
+        print("Answer submitted. Current score:", self.score)
 
     def update_score(self, points):
         self.score += points
@@ -172,8 +131,7 @@ class ReviewGame(EasyFrame):
             for widget in self.answer_frame.winfo_children():
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
-            # Use the custom popup function from the helper module
-            show_custom_popup(self, "Game Over", f"Final Score: {self.score}")
+            ScorekeeperPopup(self, "Game Over", f"Final Score: {self.score}")
             print("Game over. Final Score:", self.score)
             # Alt display the final score in a popup message.
             # messagebox.showinfo("Game Over", f"Final Score: {self.score}")

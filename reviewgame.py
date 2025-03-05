@@ -8,9 +8,7 @@ Short Description: This program is a review game that uses a JSON file to store 
 import json
 import tkinter as tk
 from breezypythongui import EasyFrame
-from scorekeeperpopup import (
-    show_custom_popup
-)
+from scorekeeperpopup import show_custom_popup
 
 class ReviewGame(EasyFrame):
     def __init__(self):
