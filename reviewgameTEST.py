@@ -100,22 +100,49 @@ class ReviewGame(EasyFrame):
     def true_or_false(self, question_data):
         options = question_data.get("options", [])
         self.tf_var = tk.StringVar()
+        # Optionally, you can set a default value if needed:
+        self.tf_var.set("")
         for i, option in enumerate(options):
             radio = tk.Radiobutton(self.answer_frame, text=option["text"],
-                                   variable=self.tf_var, value=option["text"])
+                               variable=self.tf_var, value=option["text"])
             radio.grid(row=0, column=i, padx=5)
         submit_button = tk.Button(self.answer_frame, text="Submit", command=self.submit_answer)
         submit_button.grid(row=1, column=0, columnspan=len(options), pady=10)
 
     def submit_answer(self):
-        # Placeholder for answer-checking logic.
-        # For demonstration, we add 1 point for each submitted answer.
-        user_selections = [var.get() for var in self.check_vars]
-        correct_answers = [option["isCorrect"] for option in self.all_questions[self.current_question_index]["options"]]
-    
-        if check_selecting_answer(user_selections, correct_answers):
-            self.update_score(1)
-        print("Answer submitted. Current score:", self.score)
+        if self.current_question_index >= len(self.all_questions):
+            print("No more questions.")
+            return
+        
+        current_question = self.all_questions[self.current_question_index]
+        q_type = current_question.get("type", "").lower().replace(" ", "")
+        print("Processing question type:", q_type)
+
+        if q_type == "selecting":
+            user_answers = [var.get() for var in self.check_vars]
+            if check_selecting_answer(current_question, user_answers)["options"]:
+                self.update_score(1)
+        elif q_type == "sequencing":
+            user_answers = [entry.get() for entry in self.seq_entries]
+            if check_sequencing_answer(current_question, user_answers)["options"]:
+                self.update_score(1)
+        elif q_type == "true or false":
+            try:
+                user_answer = self.tf_var.get()
+            except AttributeError:
+                print("Error: tf_var is not defined.")
+                return
+            
+            correct_answer = next((option["text"] for option in current_question["options"] if option["correct"]), None)
+            print("User answer:", user_answer, "Correct answer:", correct_answer)
+            if correct_answer is not None and check_true_or_false_answer(user_answer, correct_answer):
+                self.update_score(1)
+
+            else:
+                print(f"Incorrect. Correct answer: {correct_answer}")
+                return
+            
+            print("Answer submitted. Current score:", self.score)
 
     def update_score(self, points):
         self.score += points
