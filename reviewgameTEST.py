@@ -9,6 +9,12 @@ import json
 import tkinter as tk
 from breezypythongui import EasyFrame
 import tkinter.messagebox as messagebox
+from scorekeeperpopup import (
+    check_selecting_answer,
+    check_sequencing_answer,
+    check_true_or_false_answer,
+    show_custom_popup
+)
 
 class ReviewGame(EasyFrame):
     def __init__(self):
@@ -104,7 +110,11 @@ class ReviewGame(EasyFrame):
     def submit_answer(self):
         # Placeholder for answer-checking logic.
         # For demonstration, we add 1 point for each submitted answer.
-        self.update_score(1)
+        user_selections = [var.get() for var in self.check_vars]
+        correct_answers = [option["isCorrect"] for option in self.all_questions[self.current_question_index]["options"]]
+    
+        if check_selecting_answer(user_selections, correct_answers):
+            self.update_score(1)
         print("Answer submitted. Current score:", self.score)
 
     def update_score(self, points):
@@ -135,9 +145,12 @@ class ReviewGame(EasyFrame):
             for widget in self.answer_frame.winfo_children():
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
-            # Display the final score in a popup message.
-            messagebox.showinfo("Game Over", f"Final Score: {self.score}")
+            # Use the custom popup function from the helper module
+            show_custom_popup(self, "Game Over", f"Final Score: {self.score}")
             print("Game over. Final Score:", self.score)
+            # Alt display the final score in a popup message.
+            # messagebox.showinfo("Game Over", f"Final Score: {self.score}")
+            # print("Game over. Final Score:", self.score)
 
 def main():
     ReviewGame().mainloop()
