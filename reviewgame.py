@@ -12,6 +12,9 @@ from breezypythongui import EasyFrame
 class ReviewGame(EasyFrame):
     def __init__(self):
         EasyFrame.__init__(self, title="Science Review Game", width=500, height=400)
+        self.primary_color = "#4CAF50"    # Green
+        self.secondary_color = "#FFFFFF"  # White
+        self.configure(background=self.primary_color)
         self.score = 0
         self.game_data = None
         self.all_questions = []  # List to store all questions
