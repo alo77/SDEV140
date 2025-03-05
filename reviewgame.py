@@ -8,6 +8,9 @@ Short Description: This program is a review game that uses a JSON file to store 
 import json
 import tkinter as tk
 from breezypythongui import EasyFrame
+from scorekeeperpopup import (
+    show_custom_popup
+)
 
 class ReviewGame(EasyFrame):
     def __init__(self):
@@ -130,8 +133,11 @@ class ReviewGame(EasyFrame):
             for widget in self.answer_frame.winfo_children():
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
+            show_custom_popup(self, "Game Over", f"Final Score: {self.score}")
             print("Game over. Final Score:", self.score)
-
+            # Alt display the final score in a popup message.
+            # messagebox.showinfo("Game Over", f"Final Score: {self.score}")
+            # print("Game over. Final Score:", self.score)
 def main():
     ReviewGame().mainloop()
 
