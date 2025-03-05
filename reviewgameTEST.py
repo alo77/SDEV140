@@ -22,10 +22,7 @@ class ReviewGame(EasyFrame):
         self.all_questions = []  # List to store all questions
         self.current_question_index = 0
 
-        # Load the logo image file. Ensure "logo.png" exists in your directory.
-        self.logo = tk.PhotoImage(file="logo.png")
-        logo_label = tk.Label(self, image=self.logo, bg=self.primary_color)
-        logo_label.pack(pady=10)
+        
 
         self.createWidgets()
     
