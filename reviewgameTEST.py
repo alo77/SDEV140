@@ -8,6 +8,7 @@ Short Description: This program is a review game that uses a JSON file to store 
 import json
 import tkinter as tk
 from breezypythongui import EasyFrame
+import tkinter.messagebox as messagebox
 
 class ReviewGame(EasyFrame):
     def __init__(self):
@@ -17,10 +18,6 @@ class ReviewGame(EasyFrame):
         self.all_questions = []  # List to store all questions
         self.current_question_index = 0
         self.createWidgets()
-    
-    def open_game_window(self):
-        game_window = tk.Toplevel(self)
-        game_app = ReviewGame(game_window)
     
     def createWidgets(self):
         self.score_label = tk.Label(self, text=f"Score: {self.score}")
@@ -131,6 +128,8 @@ class ReviewGame(EasyFrame):
             for widget in self.answer_frame.winfo_children():
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
+            # Display the final score in a popup message.
+            messagebox.showinfo("Game Over", f"Final Score: {self.score}")
             print("Game over. Final Score:", self.score)
 
 def main():
