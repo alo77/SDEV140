@@ -54,6 +54,8 @@ class ReviewGame(EasyFrame):
             widget.destroy()
         
         self.question_label.config(text=question_data["question"])
+        # Save current question data for use in submit_answer()
+        self.current_question = question_data
 
         q_type = question_data.get("type", "").lower()
         if q_type == "selecting":
@@ -99,9 +101,38 @@ class ReviewGame(EasyFrame):
         submit_button.grid(row=1, column=0, columnspan=len(options), pady=10)
 
     def submit_answer(self):
-        # Placeholder for answer-checking logic.
-        self.update_score(1)
-        print("Answer submitted. Current score:", self.score)
+        q_type = self.current_question.get("type", "").lower()
+        is_correct = False
+    
+        if q_type == "selecting":
+            # Handles json "correct" key true/false
+            is_correct = True
+            for var, option in zip(self.check_vars, self.current_question["options"]):
+                if bool(var.get()) != option.get("correct", False):
+                    is_correct = False
+                    break
+        elif q_type == "sequencing":
+            try:
+                user_order = [int(entry.get()) for entry in self.seq_entries]
+                correct_order = [option.get("order") for option in self.current_question["options"]]
+                is_correct = (user_order == correct_order)
+            except ValueError:
+                is_correct = False  # Non-numeric = incorrect
+        elif q_type == "true or false":
+            user_answer = self.tf_var.get()
+            correct_answer = None
+            for option in self.current_question["options"]:
+                if option.get("correct", False):
+                    correct_answer = option["text"]
+                    break
+            is_correct = (user_answer == correct_answer)
+    
+        if is_correct:
+            self.update_score(1)
+            print("Correct answer submitted. Current score:", self.score)
+        else:
+            print("Incorrect answer submitted. Score remains:", self.score)
+
 
     def update_score(self, points):
         self.score += points
