@@ -10,7 +10,7 @@ import tkinter as tk
 from breezypythongui import EasyFrame
 
 # ----------------------------
-# The ReviewGame class (your game)
+# ReviewGame class
 # ----------------------------
 class ReviewGame(EasyFrame):
     def __init__(self):
@@ -134,7 +134,7 @@ class ReviewGame(EasyFrame):
             print("Game over. Final Score:", self.score)
 
 # ----------------------------
-# The Launcher class
+# Launcher class
 # ----------------------------
 class Launcher:
     def __init__(self, master):
@@ -142,17 +142,20 @@ class Launcher:
         self.master.title("Game Launcher")
         self.master.geometry("600x400")
 
-        # Load the image using tk.PhotoImage
         try:
-            self.photo = tk.PhotoImage(file="launcher_image.png")
+            self.photo = tk.PhotoImage(file="rocket.png")
             self.image_label = tk.Label(master, image=self.photo)
             self.image_label.pack(pady=20)
         except Exception as e:
             print("Error loading image:", e)
             self.image_label = tk.Label(master, text="Launcher Image Not Found")
             self.image_label.pack(pady=20)
+
+# Insert a spacer widget to add 50 pixels of vertical space below the image.
+        spacer = tk.Frame(master, height=50)
+        spacer.pack()
         
-        # Create the Launch Game button
+        # Launch Game button
         self.launch_button = tk.Button(master, text="Launch Game", command=self.launch_game, width=20, height=2)
         self.launch_button.pack(pady=20)
     
