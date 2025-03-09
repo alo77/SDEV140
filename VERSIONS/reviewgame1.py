@@ -8,10 +8,8 @@ Short Description: This program is a review game that uses a JSON file to store 
 import json
 import tkinter as tk
 from breezypythongui import EasyFrame
+from scorekeeperpopup import show_custom_popup
 
-# ----------------------------
-# ReviewGame class
-# ----------------------------
 class ReviewGame(EasyFrame):
     def __init__(self):
         EasyFrame.__init__(self, title="Science Review Game", width=500, height=400)
@@ -25,13 +23,13 @@ class ReviewGame(EasyFrame):
         self.createWidgets()
     
     def createWidgets(self):
-        self.score_label = tk.Label(self, text=f"Score: {self.score}", bg=self.primary_color, fg=self.secondary_color)
+        self.score_label = tk.Label(self, text=f"Score: {self.score}")
         self.score_label.pack(side="top", anchor="ne", padx=10, pady=10)
         
-        self.question_label = tk.Label(self, text="", wraplength=400, bg=self.primary_color, fg=self.secondary_color)
+        self.question_label = tk.Label(self, text="", wraplength=400)
         self.question_label.pack(pady=20)
 
-        self.answer_frame = tk.Frame(self, background=self.primary_color)
+        self.answer_frame = tk.Frame(self)
         self.answer_frame.pack(pady=20)
 
         self.start_button = tk.Button(self, text="Start Game", command=self.start_game)
@@ -54,8 +52,6 @@ class ReviewGame(EasyFrame):
             widget.destroy()
         
         self.question_label.config(text=question_data["question"])
-        # Save current question data for use in submit_answer()
-        self.current_question = question_data
 
         q_type = question_data.get("type", "").lower()
         if q_type == "selecting":
@@ -72,17 +68,18 @@ class ReviewGame(EasyFrame):
         self.check_vars = []
         for i, option in enumerate(options):
             var = tk.IntVar()
-            chk = tk.Checkbutton(self.answer_frame, text=option["text"], variable=var, bg=self.primary_color, fg=self.secondary_color)
+            chk = tk.Checkbutton(self.answer_frame, text=option["text"], variable=var)
             chk.grid(row=i, column=0, sticky="w", padx=5, pady=2)
             self.check_vars.append(var)
         submit_button = tk.Button(self.answer_frame, text="Submit", command=self.submit_answer)
         submit_button.grid(row=len(options), column=0, pady=10)
 
     def sequencing(self, question_data):
+        # Display each option with an entry box for the user to input the order number.
         options = question_data.get("options", [])
         self.seq_entries = []
         for i, option in enumerate(options):
-            label = tk.Label(self.answer_frame, text=option["text"], bg=self.primary_color, fg=self.secondary_color)
+            label = tk.Label(self.answer_frame, text=option["text"])
             label.grid(row=i, column=0, padx=5, pady=2, sticky="w")
             entry = tk.Entry(self.answer_frame, width=5)
             entry.grid(row=i, column=1, padx=5, pady=2)
@@ -95,44 +92,16 @@ class ReviewGame(EasyFrame):
         self.tf_var = tk.StringVar()
         for i, option in enumerate(options):
             radio = tk.Radiobutton(self.answer_frame, text=option["text"],
-                                   variable=self.tf_var, value=option["text"], bg=self.primary_color, fg=self.secondary_color)
+                                   variable=self.tf_var, value=option["text"])
             radio.grid(row=0, column=i, padx=5)
         submit_button = tk.Button(self.answer_frame, text="Submit", command=self.submit_answer)
         submit_button.grid(row=1, column=0, columnspan=len(options), pady=10)
 
     def submit_answer(self):
-        q_type = self.current_question.get("type", "").lower()
-        is_correct = False
-    
-        if q_type == "selecting":
-            # Handles json "correct" key true/false
-            is_correct = True
-            for var, option in zip(self.check_vars, self.current_question["options"]):
-                if bool(var.get()) != option.get("correct", False):
-                    is_correct = False
-                    break
-        elif q_type == "sequencing":
-            try:
-                user_order = [int(entry.get()) for entry in self.seq_entries]
-                correct_order = [option.get("order") for option in self.current_question["options"]]
-                is_correct = (user_order == correct_order)
-            except ValueError:
-                is_correct = False  # Non-numeric = incorrect
-        elif q_type == "true or false":
-            user_answer = self.tf_var.get()
-            correct_answer = None
-            for option in self.current_question["options"]:
-                if option.get("correct", False):
-                    correct_answer = option["text"]
-                    break
-            is_correct = (user_answer == correct_answer)
-    
-        if is_correct:
-            self.update_score(1)
-            print("Correct answer submitted. Current score:", self.score)
-        else:
-            print("Incorrect answer submitted. Score remains:", self.score)
-
+        # Placeholder for answer-checking logic.
+        # For demonstration, we add 1 point for each submitted answer.
+        self.update_score(1)
+        print("Answer submitted. Current score:", self.score)
 
     def update_score(self, points):
         self.score += points
@@ -157,53 +126,18 @@ class ReviewGame(EasyFrame):
         if self.current_question_index < len(self.all_questions):
             self.display_question(self.all_questions[self.current_question_index])
         else:
+            # No more questions: end of game.
             self.question_label.config(text="Congratulations! You've completed the review game.")
             for widget in self.answer_frame.winfo_children():
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
             show_custom_popup(self, "Game Over", f"Final Score: {self.score}")
             print("Game over. Final Score:", self.score)
-
-# ----------------------------
-# Launcher class
-# ----------------------------
-class Launcher:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("Game Launcher")
-        self.master.geometry("600x400")
-
-        try:
-            self.photo = tk.PhotoImage(file="rocket2.png")
-            self.image_label = tk.Label(master, image=self.photo)
-            self.image_label.pack(pady=20)
-        except Exception as e:
-            print("Error loading image:", e)
-            self.image_label = tk.Label(master, text="Launcher Image Not Found")
-            self.image_label.pack(pady=20)
-
-# Insert a spacer widget to add 50 pixels of vertical space below the image.
-        spacer = tk.Frame(master, height=100)
-        spacer.pack()
-        
-        # Launch Game button
-        self.launch_button = tk.Button(master, text="Launch Game", command=self.launch_game, width=20, height=2)
-        self.launch_button.pack(pady=20)
-    
-    def launch_game(self):
-        # Close the launcher window and start the game
-        self.master.destroy()  # Close launcher
-        # Start the game by creating a new instance of ReviewGame.
-        game_app = ReviewGame()
-        game_app.mainloop()
-
-# ----------------------------
-# Main function to run the launcher
-# ----------------------------
+            # Alt display the final score in a popup message.
+            # messagebox.showinfo("Game Over", f"Final Score: {self.score}")
+            # print("Game over. Final Score:", self.score)
 def main():
-    root = tk.Tk()
-    launcher = Launcher(root)
-    root.mainloop()
+    ReviewGame().mainloop()
 
 if __name__ == "__main__":
     main()
