@@ -143,7 +143,7 @@ class Launcher:
         self.master.geometry("600x400")
 
         try:
-            self.photo = tk.PhotoImage(file="rocket.png")
+            self.photo = tk.PhotoImage(file="rocket2.png")
             self.image_label = tk.Label(master, image=self.photo)
             self.image_label.pack(pady=20)
         except Exception as e:
@@ -152,7 +152,7 @@ class Launcher:
             self.image_label.pack(pady=20)
 
 # Insert a spacer widget to add 50 pixels of vertical space below the image.
-        spacer = tk.Frame(master, height=50)
+        spacer = tk.Frame(master, height=100)
         spacer.pack()
         
         # Launch Game button
