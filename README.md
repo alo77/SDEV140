@@ -98,5 +98,4 @@ The source code in `reviewgame.py` is fully documented with in-line comments tha
 ## GitHub Repository Link
 
 You can find the complete project, including this README, source code, test data, and screenshots, in the following GitHub repository:
-Review Game Repository
-(GitHub repository URL.)
+[Review Game Repository](https://github.com/alo77/SDEV140)
