@@ -162,7 +162,15 @@ class ReviewGame(EasyFrame):
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
             self.question_label.config(text=f"Game Over\nFinal Score: {self.score}")
+
+            # Load confetti image
+            self.confetti_image = tk.PhotoImage(file="confetti.png")
+            self.confetti_label = tk.Label(self, image=self.confetti_image)
+            self.confetti_label.pack(pady=20)
+
+            # Display final score
             print("Game over. Final Score:", self.score)
+
 
 # ----------------------------
 # Launcher class
