@@ -91,17 +91,17 @@ A fun and interactive science review game that tests your knowledge! This GUI-ba
 ---
 
 ## 📸 Screenshots
-
-![Main Menu](images/main_menu.png)  
+  
 *Main menu interface.*
+<div align=center>
+<img src="assets/LaunchScreen.png" alt="Launch Screen" width="500">
+</div>
 
-![Question Screen](images/question_screen.png)  
 *Question screen interface.*
 <div align=center>
 <img src="assets/PREVIEW.png" alt="Preview" width="500">
 </div>
 
-![Test Case Screenshot](images/test_case.png)  
 *Successful test case demonstration.*
 <div align=center>
 <img src="assets/TEST2.png" alt="Test 2" width="500">
