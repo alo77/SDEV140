@@ -27,10 +27,12 @@ Validation testing ensures that the application behaves correctly for a variety 
 1. **Valid Test Data:**  
    - **Input:** All fields filled with expected formats (e.g., standard text questions, single-choice answers).  
    - **Expected Result:** The program should display the question, accept the answer, and show correct/incorrect feedback without errors.
+![Test Screenshot](assets/TEST3.png)
 
 2. **Boundary Cases:**  
    - **Input:** Empty answer fields, extremely long text inputs, or special characters.  
    - **Expected Result:** The program either prompts the user to correct their input (if needed) or handles it gracefully.
+![Test Screenshot](assets/TEST3.png)
 
 3. **Invalid/Edge Cases:**  
    - **Input:** Non-text data where text is expected, or invalid question data.  
@@ -44,6 +46,7 @@ Validation testing ensures that the application behaves correctly for a variety 
 
 ### Screenshots  
 *(Space savers for screenshots; replace with actual images in your repository)*
+![Game Preview](assets/PREVIEW.png)
 
 - **Screenshot 1: Valid Test Data Working**  
 - **Screenshot 2: Handling Boundary Cases**
