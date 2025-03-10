@@ -14,7 +14,7 @@ from breezypythongui import EasyFrame
 # ----------------------------
 class ReviewGame(EasyFrame):
     def __init__(self):
-        EasyFrame.__init__(self, title="Science Review Game", width=500, height=400)
+        EasyFrame.__init__(self, title="Science Review Game", width=1200, height=1200)
         self.primary_color = "#4CAF50"    # Green
         self.secondary_color = "#FFFFFF"  # White
         self.configure(background=self.primary_color)
