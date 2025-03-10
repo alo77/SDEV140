@@ -14,7 +14,7 @@ from breezypythongui import EasyFrame
 # ----------------------------
 class ReviewGame(EasyFrame):
     def __init__(self):
-        EasyFrame.__init__(self, title="Science Review Game", width=1200, height=1200)
+        EasyFrame.__init__(self, title="Science Review Game", width=800, height=700)
         self.primary_color = "#4CAF50"    # Green
         self.secondary_color = "#FFFFFF"  # White
         self.configure(background=self.primary_color)
@@ -161,7 +161,7 @@ class ReviewGame(EasyFrame):
             for widget in self.answer_frame.winfo_children():
                 widget.destroy()
             self.next_button.config(state=tk.DISABLED)
-            show_custom_popup(self, "Game Over", f"Final Score: {self.score}")
+            self.question_label.config(text=f"Game Over\nFinal Score: {self.score}")
             print("Game over. Final Score:", self.score)
 
 # ----------------------------
